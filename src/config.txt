@@ -1,0 +1,14 @@
+#Liczba poziomow
+10
+#Szerokosc planszy
+500
+#Wysokosc planszy
+500
+#Ilosc zyc:
+3
+#Predkosc gracza
+100
+#Predkosc potworow
+100
+#Pole razenia bomby
+5

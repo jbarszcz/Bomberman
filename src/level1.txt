@@ -1,0 +1,10 @@
+#rozmiary planszy (wiersze i kolumny)
+11 11
+#Rozklad przeszkod niezniszcalnych
+1 1
+#Rozklad przeszkod zniszczalnych
+1 3
+
+
+
+
