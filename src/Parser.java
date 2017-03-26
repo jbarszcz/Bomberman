@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * klasa majšca na celu pobieranie danych z pliku konfiguracyjnego
  */
-public  class Parser {
+public final class Parser {
 
 
     public static int LevelNumber;
@@ -21,9 +21,16 @@ public  class Parser {
     public static BufferedImage brickImage;
 
     /**
+     * konstruktor klasy Parser. Obiekt ten tworzony jest tylko raz, więc od razu odczytywany jest plik konfiguracyjny
+     **/
+    public Parser(){
+        readCfg();
+    }
+
+    /**
      * funkcja odczytująca kolejne dane z pliku konfiguracynego
      */
-    public void odczytaj() {
+    public void readCfg() {
         try {
             File sciezka = new File("src/config.txt");
             FileReader plik = new FileReader(sciezka);
@@ -38,22 +45,16 @@ public  class Parser {
             GameWindowHeight = Integer.parseInt(odczyt.readLine());
             odczyt.readLine();
             odczyt.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie udało się odnaleźć pliku konfiguracyjnego");
-        } catch (IOException e) {
-            System.out.println("Błąd strumienia IO");
         }
+        catch (FileNotFoundException e) {System.out.println("Nie udało się odnaleźć pliku konfiguracyjnego");}
+        catch (IOException e) {System.out.println("Błąd strumienia IO");}
 
         try {
             wallImage = ImageIO.read(getClass().getResourceAsStream("castleWall.png"));
-            brickImage= ImageIO.read(getClass().getResourceAsStream("brickWall.png"));
-        }
+            brickImage= ImageIO.read(getClass().getResourceAsStream("brickWall.png"));}
 
         catch (IOException e)
-        {
-            System.out.println("IO exception przy wczytywaniu obrazkow");
-        }
+        {System.out.println("IO exception przy wczytywaniu obrazkow");}
 
 
     }
@@ -75,11 +76,11 @@ public  class Parser {
             File level = new File(path);
             FileReader levelfile = new FileReader(level);
             BufferedReader readlevel = new BufferedReader(levelfile);
-            String temp=temp = readlevel.readLine();
+            String temp = readlevel.readLine();
             Scanner s;
 
 
-            while (!temp.equals("")&& temp.length()!=0) { //TODO jakoś poustawiac te warunki , zeby nie uzywac tego ifa nizej
+            while (!temp.equals("")) {
 
                 System.out.println(temp);
 
@@ -100,45 +101,42 @@ public  class Parser {
                     case (1): //wczytywanie liczby wierszy i kolumn
                         numberOfRows=x;
                         numberOfColumns=y;
+                        break;
 
                     case (2): //wczytywanie scian niezniszczalnych
                        // gameMap.MapOfObjects.put(new PointXY(x,y), new Wall(x, y, 50, 50, wallImage));
-                       gameMap.vGameObjects.add(new Wall((GameWindowWidth/numberOfColumns)*x,(GameWindowHeight/numberOfRows)*y,
-                               GameWindowHeight/numberOfRows,GameWindowWidth/numberOfColumns,wallImage));
+                       gameMap.vGameObjects.add(new Wall(
+                               (GameWindowWidth/numberOfColumns)*x,
+                               (GameWindowHeight/numberOfRows)*y,
+                               GameWindowHeight/numberOfRows,
+                               GameWindowWidth/numberOfColumns,wallImage));
                         break;
 
                     case (3): //wczytywanie scian zniszczalnych
 
                        // gameMap.MapOfObjects.put(new PointXY(x,y), new Brick(x, y, 50, 50, brickImage));
-                        gameMap.vGameObjects.add(new Brick((GameWindowWidth/numberOfColumns)*x,(GameWindowHeight/numberOfRows)*y,GameWindowHeight/numberOfRows,
+                        gameMap.vGameObjects.add(new Brick(
+                                (GameWindowWidth/numberOfColumns)*x,
+                                (GameWindowHeight/numberOfRows)*y,
+                                GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,brickImage));
+                        break;
 
-                    break;
-
-                    default: break; //gdy state spoza zakresu przerywa while'a
+                    default: break;
 
 
-                }temp = readlevel.readLine();
+                }   temp = readlevel.readLine();
 
             }   readlevel.close();
 
+        } catch (FileNotFoundException e) {System.out.println("Nie udało się odnaleźć pliku poziomu");
 
-            //TODO: wczytanie obrazków, ustawienia rozmiaru w case
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie udało się odnaleźć pliku poziomu");
-        } catch (IOException e) {
-
-            System.out.println("wyjatek IO");
-        }
-
+        } catch (IOException e) {System.out.println("wyjatek IO");}
     }
 
 
 
 
 
-    public Parser(){
-        odczytaj();
-    }
+
 }

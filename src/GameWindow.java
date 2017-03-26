@@ -7,21 +7,23 @@ import java.awt.event.ActionListener;
  */
 public class GameWindow extends JFrame {
     Parser parse = new Parser();
-    GameMap gm = new GameMap("1");
-
+    GameMap gmap = new GameMap("1");
+    GameMenu gmenu = new GameMenu();
     public int width = Parser.GameWindowWidth;
     public int height = Parser.GameWindowHeight;
 
     public GameWindow(){
         super("Dyna Blaster");
 
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(width,height);
         setBackground(new Color(34,139,34));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-        setSize(width,height);
-        this.add(gm);
+        this.add(gmap);
+       // this.add(gmenu);
+
+
 
 
 

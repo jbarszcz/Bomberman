@@ -27,7 +27,7 @@ public class GameMap extends JPanel
         Parser.loadLevel("src/level" + levelNumber +  ".txt",this);
 
 
-        repaint();
+       // repaint();
     }
 
 
