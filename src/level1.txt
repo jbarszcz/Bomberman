@@ -31,7 +31,23 @@
 2 1
 3 3
 4 5
-
+2 8
+4 7
+6 4
+6 5
+9 6
+5 8
+#Pozycja bombera
+2 2
+#Pozycja potworów
+4 2
+6 6
+#Dodatkowe życia
+8 8
+#Dodatkowe życia
+8 6
+#Bonus 1
+8 2
 
 
 

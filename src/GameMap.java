@@ -1,4 +1,5 @@
 import sun.security.krb5.internal.PAData;
+import sun.security.util.Length;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,11 +19,14 @@ public class GameMap extends JPanel
 
 {
     public Vector<GameObject> vGameObjects;
+    Bomber bomber;
+    int numberOfPoints=500;
 
 
     public GameMap(String levelNumber) {
 
         vGameObjects = new Vector<>();
+
 
         Parser.loadLevel("src/level" + levelNumber +  ".txt",this);
 
@@ -38,6 +42,22 @@ public class GameMap extends JPanel
             go.draw(g);
         }
 
+        bomber.draw(g);
+        drawHUD(g);
+
+    }
+
+    public void drawHUD(Graphics g){
+
+
+        g.drawImage(Parser.lifeImage,GameWindow.lengthUnit,Parser.GameWindowHeight,GameWindow.lengthUnit,GameWindow.lengthUnit,null);
+        g.setFont(new Font("Calibri",Font.PLAIN, GameWindow.lengthUnit));
+        g.setColor(Color.white);
+
+        String lifes = Integer.toString(bomber.lifesLeft);
+
+        g.drawString("=" + lifes,2*GameWindow.lengthUnit,Parser.GameWindowHeight + GameWindow.lengthUnit);
+        g.drawString("Score=" + Integer.toString(numberOfPoints),4*GameWindow.lengthUnit,Parser.GameWindowHeight+GameWindow.lengthUnit);
 
     }
 

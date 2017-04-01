@@ -11,17 +11,18 @@ public class GameWindow extends JFrame {
     GameMenu gmenu = new GameMenu();
     public int width = Parser.GameWindowWidth;
     public int height = Parser.GameWindowHeight;
+    public static int lengthUnit;
 
     public GameWindow(){
         super("Dyna Blaster");
 
-        setSize(width,height);
+        setSize(width,height + 2*lengthUnit); //ustawiamy trochę dłuższy rozmiar żeby zmieścić licznik żyć i punktów
         setBackground(new Color(34,139,34));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
         this.add(gmap);
-       // this.add(gmenu);
+       //this.add(gmenu);
 
 
 

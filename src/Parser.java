@@ -7,6 +7,9 @@ import java.util.Scanner;
 import java.util.Vector;
 import java.io.IOException;
 
+import static java.lang.Integer.max;
+import static java.lang.Math.min;
+
 /**
  * klasa majšca na celu pobieranie danych z pliku konfiguracyjnego
  */
@@ -16,9 +19,20 @@ public final class Parser {
     public static int LevelNumber;
     public static int GameWindowWidth;
     public static int GameWindowHeight;
+    public static int NumberOfLifes;
+    public static int BomberSpeed;
+    public static int MonsterSpeed;
+    public static int BombPower;
+
 
     public static BufferedImage wallImage;
     public static BufferedImage brickImage;
+    public static BufferedImage bomberImage;
+    public static BufferedImage monsterImage;
+    public static BufferedImage lifeImage;
+    public static BufferedImage bombImage;
+    public static BufferedImage bonus1Image;
+
 
     /**
      * konstruktor klasy Parser. Obiekt ten tworzony jest tylko raz, więc od razu odczytywany jest plik konfiguracyjny
@@ -44,6 +58,11 @@ public final class Parser {
             odczyt.readLine();
             GameWindowHeight = Integer.parseInt(odczyt.readLine());
             odczyt.readLine();
+            NumberOfLifes = Integer.parseInt(odczyt.readLine());
+            odczyt.readLine();
+            BomberSpeed = Integer.parseInt(odczyt.readLine());
+            odczyt.readLine();
+
             odczyt.close();
         }
         catch (FileNotFoundException e) {System.out.println("Nie udało się odnaleźć pliku konfiguracyjnego");}
@@ -51,7 +70,12 @@ public final class Parser {
 
         try {
             wallImage = ImageIO.read(getClass().getResourceAsStream("castleWall.png"));
-            brickImage= ImageIO.read(getClass().getResourceAsStream("brickWall.png"));}
+            brickImage= ImageIO.read(getClass().getResourceAsStream("brickWall.png"));
+            bomberImage= ImageIO.read(getClass().getResourceAsStream("bomberIMG.png"));
+            monsterImage= ImageIO.read(getClass().getResourceAsStream("monsterIMG.png"));
+            lifeImage= ImageIO.read(getClass().getResourceAsStream("lifeIMG.png"));
+            bonus1Image= ImageIO.read(getClass().getResourceAsStream("bonus1IMG.png"));
+        }
 
         catch (IOException e)
         {System.out.println("IO exception przy wczytywaniu obrazkow");}
@@ -101,6 +125,7 @@ public final class Parser {
                     case (1): //wczytywanie liczby wierszy i kolumn
                         numberOfRows=x;
                         numberOfColumns=y;
+                        GameWindow.lengthUnit = max(GameWindowHeight/x,GameWindowHeight/y);
                         break;
 
                     case (2): //wczytywanie scian niezniszczalnych
@@ -120,6 +145,38 @@ public final class Parser {
                                 (GameWindowHeight/numberOfRows)*y,
                                 GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,brickImage));
+                    break;
+
+                    case (4): //wczytanie pozycji bombera
+                        gameMap.bomber=new Bomber((GameWindowWidth/numberOfColumns)*x,
+                                (GameWindowHeight/numberOfRows)*y,
+                                GameWindowHeight/numberOfRows,
+                                GameWindowWidth/numberOfColumns,bomberImage);
+
+                    break;
+
+                    case (5): gameMap.vGameObjects.add(new Monster(
+                            (GameWindowWidth/numberOfColumns)*x,
+                            (GameWindowHeight/numberOfRows)*y,
+                            GameWindowHeight/numberOfRows,
+                            GameWindowWidth/numberOfColumns,monsterImage));
+
+                        break;
+
+                    case (6): gameMap.vGameObjects.add(new Bonus(
+                            (GameWindowWidth/numberOfColumns)*x,
+                            (GameWindowHeight/numberOfRows)*y,
+                            GameWindowHeight/numberOfRows,
+                            GameWindowWidth/numberOfColumns,lifeImage,1));
+
+                        break;
+
+                    case (7): gameMap.vGameObjects.add(new Bonus(
+                            (GameWindowWidth/numberOfColumns)*x,
+                            (GameWindowHeight/numberOfRows)*y,
+                            GameWindowHeight/numberOfRows,
+                            GameWindowWidth/numberOfColumns,bonus1Image,2));
+
                         break;
 
                     default: break;
