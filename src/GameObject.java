@@ -24,6 +24,11 @@ public abstract class GameObject {
 
     public void draw(Graphics g) {
         g.drawImage(image, x, y, xsize, ysize,null);
+
+       /* System.out.print(x);
+        System.out.print(" ");
+        System.out.print(y);
+        System.out.println();*/
     }
 
 // zestaw getów i setów

@@ -51,7 +51,7 @@ public final class Parser {
             BufferedReader odczyt = new BufferedReader(plik);
 
             odczyt.readLine();
-
+            //wczytywanie parametrów gry
             LevelNumber = Integer.parseInt(odczyt.readLine());
             odczyt.readLine();
             GameWindowWidth = Integer.parseInt(odczyt.readLine());
@@ -63,12 +63,15 @@ public final class Parser {
             BomberSpeed = Integer.parseInt(odczyt.readLine());
             odczyt.readLine();
 
+            //System.out.println(GameWindowWidth);
+            //System.out.println(GameWindowHeight);
+
             odczyt.close();
         }
         catch (FileNotFoundException e) {System.out.println("Nie udało się odnaleźć pliku konfiguracyjnego");}
         catch (IOException e) {System.out.println("Błąd strumienia IO");}
 
-        try {
+        try { //wczytywanie obrazków elementów na planszy
             wallImage = ImageIO.read(getClass().getResourceAsStream("castleWall.png"));
             brickImage= ImageIO.read(getClass().getResourceAsStream("brickWall.png"));
             bomberImage= ImageIO.read(getClass().getResourceAsStream("bomberIMG.png"));
@@ -104,76 +107,74 @@ public final class Parser {
             Scanner s;
 
 
-            while (!temp.equals("")) {
+            while (!temp.equals(".")) { //definicja poziomu kończy się linią zawierajacą kropkę
 
-                System.out.println(temp);
+                //System.out.println(temp);
 
 
 
-                if (temp.charAt(0) == '#') {
+                if (temp.charAt(0) == '#') { //wczytywanie różnych elementów oddzielone jest linią rozpoczętą od '#'
                     state++;
                     temp = readlevel.readLine();
                     continue;
                 }
-
                 s = new Scanner(temp);
                 x = s.nextInt();
                 y = s.nextInt();
 
 
                 switch (state) {
-                    case (1): //wczytywanie liczby wierszy i kolumn
+                    //wczytywanie liczby wierszy i kolumn
+                    case (1):
                         numberOfRows=x;
                         numberOfColumns=y;
-                        GameWindow.lengthUnit = max(GameWindowHeight/x,GameWindowHeight/y);
+                        GameWindow.lengthUnit = min(GameWindowHeight/x,GameWindowHeight/y);
                         break;
-
-                    case (2): //wczytywanie scian niezniszczalnych
-                       // gameMap.MapOfObjects.put(new PointXY(x,y), new Wall(x, y, 50, 50, wallImage));
+                    //wczytywanie scian niezniszczalnych
+                    case (2):
                        gameMap.vGameObjects.add(new Wall(
-                               (GameWindowWidth/numberOfColumns)*x,
-                               (GameWindowHeight/numberOfRows)*y,
+                               (GameWindowWidth/numberOfColumns)*(x-1),  //-1 ponieważ użytkownik zwykle indeksuje od 1
+                               (GameWindowHeight/numberOfRows)*(y-1),
                                GameWindowHeight/numberOfRows,
                                GameWindowWidth/numberOfColumns,wallImage));
                         break;
+                    //wczytywanie scian zniszczalnych
+                    case (3):
 
-                    case (3): //wczytywanie scian zniszczalnych
-
-                       // gameMap.MapOfObjects.put(new PointXY(x,y), new Brick(x, y, 50, 50, brickImage));
                         gameMap.vGameObjects.add(new Brick(
-                                (GameWindowWidth/numberOfColumns)*x,
-                                (GameWindowHeight/numberOfRows)*y,
+                                (GameWindowWidth/numberOfColumns)*(x-1),
+                                (GameWindowHeight/numberOfRows)*(y-1),
                                 GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,brickImage));
                     break;
-
-                    case (4): //wczytanie pozycji bombera
-                        gameMap.bomber=new Bomber((GameWindowWidth/numberOfColumns)*x,
-                                (GameWindowHeight/numberOfRows)*y,
+                    //wczytanie pozycji bombera
+                    case (4):
+                        gameMap.bomber=new Bomber((GameWindowWidth/numberOfColumns)*(x-1),
+                                (GameWindowHeight/numberOfRows)*(y-1),
                                 GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,bomberImage);
 
                     break;
 
                     case (5): gameMap.vGameObjects.add(new Monster(
-                            (GameWindowWidth/numberOfColumns)*x,
-                            (GameWindowHeight/numberOfRows)*y,
+                            (GameWindowWidth/numberOfColumns)*(x-1),
+                            (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,monsterImage));
 
                         break;
-
+                    //dodatkowe życia
                     case (6): gameMap.vGameObjects.add(new Bonus(
-                            (GameWindowWidth/numberOfColumns)*x,
-                            (GameWindowHeight/numberOfRows)*y,
+                            (GameWindowWidth/numberOfColumns)*(x-1),
+                            (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,lifeImage,1));
 
                         break;
-
+                    //bonusy
                     case (7): gameMap.vGameObjects.add(new Bonus(
-                            (GameWindowWidth/numberOfColumns)*x,
-                            (GameWindowHeight/numberOfRows)*y,
+                            (GameWindowWidth/numberOfColumns)*(x-1),
+                            (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,bonus1Image,2));
 

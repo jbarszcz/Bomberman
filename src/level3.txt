@@ -1,0 +1,23 @@
+#wiersze i kolumny
+7 7
+#Rozklad przeszkod niezniszczalnych
+1 1
+1 3
+1 5
+3 1
+3 3
+3 5
+5 1
+5 3
+5 5
+7 1
+7 3
+7 5
+7 7
+#Rozklad przeszkod zniszczalnych
+#Pozycja bombera
+2 2
+#Pozycja potworów
+#Dodatkowe życia
+#Bonus 1
+.

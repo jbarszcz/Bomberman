@@ -1,9 +1,9 @@
 #Liczba poziomow
 10
 #Szerokosc planszy
-800
+500
 #Wysokosc planszy
-800
+500
 #Ilosc zyc:
 4
 #Predkosc gracza

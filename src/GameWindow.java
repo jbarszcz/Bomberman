@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
  * klasa zawierająca ramkę programu (JFrame)
  */
 public class GameWindow extends JFrame {
-    Parser parse = new Parser();
-    GameMap gmap = new GameMap("1");
+    GameMap gmap;
     GameMenu gmenu = new GameMenu();
     public int width = Parser.GameWindowWidth;
     public int height = Parser.GameWindowHeight;
@@ -16,13 +15,16 @@ public class GameWindow extends JFrame {
     public GameWindow(){
         super("Dyna Blaster");
 
-        setSize(width,height + 2*lengthUnit); //ustawiamy trochę dłuższy rozmiar żeby zmieścić licznik żyć i punktów
+        //setSize(width,height); //ustawiamy trochę dłuższy rozmiar żeby zmieścić licznik żyć i punktów
         setBackground(new Color(34,139,34));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+        gmap = new GameMap("2");
         this.add(gmap);
-       //this.add(gmenu);
+        gmap.setPreferredSize(new Dimension(width +lengthUnit,height + lengthUnit)); //poszerzamy okno o 1 jednostke zeby zmieścić HUD
+        pack();
+
 
 
 

@@ -28,7 +28,7 @@ public class GameMap extends JPanel
         vGameObjects = new Vector<>();
 
 
-        Parser.loadLevel("src/level" + levelNumber +  ".txt",this);
+        Parser.loadLevel("src/level" +levelNumber+  ".txt",this);
 
 
        // repaint();
@@ -50,14 +50,16 @@ public class GameMap extends JPanel
     public void drawHUD(Graphics g){
 
 
-        g.drawImage(Parser.lifeImage,GameWindow.lengthUnit,Parser.GameWindowHeight,GameWindow.lengthUnit,GameWindow.lengthUnit,null);
+        g.drawImage(Parser.lifeImage,0,Parser.GameWindowHeight,GameWindow.lengthUnit,GameWindow.lengthUnit,null);
+
         g.setFont(new Font("Calibri",Font.PLAIN, GameWindow.lengthUnit));
         g.setColor(Color.white);
 
         String lifes = Integer.toString(bomber.lifesLeft);
 
-        g.drawString("=" + lifes,2*GameWindow.lengthUnit,Parser.GameWindowHeight + GameWindow.lengthUnit);
-        g.drawString("Score=" + Integer.toString(numberOfPoints),4*GameWindow.lengthUnit,Parser.GameWindowHeight+GameWindow.lengthUnit);
+        g.drawString("=" + lifes ,GameWindow.lengthUnit,Parser.GameWindowHeight + GameWindow.lengthUnit);
+
+        g.drawString("Score=" + Integer.toString(numberOfPoints),3*GameWindow.lengthUnit,Parser.GameWindowHeight+GameWindow.lengthUnit);
 
     }
 
