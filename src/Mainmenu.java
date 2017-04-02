@@ -56,10 +56,10 @@ public class Mainmenu {
 
     public void gui(){
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(Parser.GameWindowWidth , Parser.GameWindowHeight);
+        f.setSize(600, 600);
         f.setVisible(true);
-        f2.setSize(Parser.GameWindowWidth, Parser.GameWindowHeight);
-        f3.setSize(Parser.GameWindowWidth, Parser.GameWindowHeight);
+        f2.setSize(600, 600);
+        f3.setSize(600, 600);
 
 
 
