@@ -31,7 +31,7 @@ public class GameWindow extends JFrame {
         setBackground(new Color(34,139,34));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        gmap = new GameMap("3");
+        gmap = new GameMap("1");
         this.add(gmap);
         gmap.setPreferredSize(new Dimension(width +lengthUnit,height + lengthUnit)); //poszerzamy okno o 1 jednostke zeby zmieścić HUD
         pack();

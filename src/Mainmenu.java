@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Thenio on 2017-04-02.
+ * Klasa tworząca główne menu oraz urchomiająca podmenu oraz grę
  */
 public class Mainmenu {
+    /**
+     * Tworzymy dla menu i podmenu ramki, panele, przyciski, checkboxy
+     */
     JFrame f = new JFrame("Menu główne");
     JFrame f2 = new JFrame("Podmenu - Najlepsze Wyniki");
     JFrame f3 = new JFrame("Podmenu - Ustawienia");
@@ -49,11 +52,18 @@ public class Mainmenu {
 
     GridBagConstraints c = new GridBagConstraints();
 
+    /**
+     * Konstruktor klasy Mainmenu wywołujący metode gui()
+     */
     public Mainmenu(){
 
         gui();
     }
 
+    /**
+     * Metoda gui odpowiedzalana za rysowanie wszystkich elementów oraz właściwy ich układ
+     * Metoda, także obsługuje zdarzenia (np. przechodzenie do podmenu)
+     */
     public void gui(){
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(Parser.GameWindowWidth , Parser.GameWindowHeight);
@@ -65,7 +75,9 @@ public class Mainmenu {
 
         c.insets=new Insets(10, 10, 10, 10);  //to jest odpowiedzialne za szpary
 
-        // HIGHSCORE
+        /**
+         * Tworzymy pod menu Highscore
+         */
         p2.add(l2, c);
         c.gridx = 0;
         c.gridy = 1;
@@ -75,9 +87,11 @@ public class Mainmenu {
         p2.add(powrotny, c);
         f2.add(p2);
 
-        //---------
 
-        // SETTINGS
+
+        /**
+         * Tworzymy pod menu Settings
+         */
 
         c.gridx = 0;
         c.gridy = 0;
@@ -106,10 +120,11 @@ public class Mainmenu {
 
         f3.add(p3);
 
-        //---------
 
 
-        // MENU GLOWNE
+        /**
+         * Tworzymy menu główne z 4 przycskimi
+         */
         c.gridx=0;
         c.gridy=0;
         p.add(l1, c);
@@ -132,17 +147,13 @@ public class Mainmenu {
 
         f.add(p);
 
-        // ------------------
 
 
 
 
-
-
-
-        //OBESRWATORZY !!!!!
-
-
+        /**
+         * Obługa zdarzenia przycisku START
+         */
 
         b1.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +166,9 @@ public class Mainmenu {
 
             }
         });
+        /**
+         * Obsługa zdarzenia przycisku Highscore
+         */
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,6 +185,9 @@ public class Mainmenu {
             }
         });
 
+        /**
+         * Obsługa zdarzenia przycisku SETTINGS
+         */
         b3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -187,6 +204,9 @@ public class Mainmenu {
             }
         });
 
+        /**
+         * Obłsuga zdarzenia przycisku EXIT
+         */
         b4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -195,6 +215,9 @@ public class Mainmenu {
             }
         });
 
+        /**
+         * Obługa zdarzenia obszaru tekstu, w którym użytownik może zmienić nick postaci
+         */
         txt1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -207,7 +230,9 @@ public class Mainmenu {
 
             }
         });
-
+        /**
+         * Obłsuga zdarzenia checkbox, w którym użytkownik może wybrać poziom planszy
+         */
         level.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -215,12 +240,12 @@ public class Mainmenu {
                 levelek = level.getSelectedIndex(); //czyli 0 - łatwy, 1 - sredni, 2 - trudny
                 System.out.println("Wybrany level: " + levelek);
 
-                // mozna tego string gdzies dalej przekazac
+                // mozna tego inta gdzies dalej przekazac
 
 
             }
         });
-        // --------------
+
 
 
 
