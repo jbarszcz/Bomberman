@@ -62,7 +62,7 @@ public class Mainmenu {
 
     /**
      * Metoda gui odpowiedzalana za rysowanie wszystkich elementów oraz właściwy ich układ
-     * Metoda, także obsługuje zdarzenia (np. przechodzenie do podmenu)
+     * Metoda, także obsługuje zdarzenia (np. przechodzenie do podmenu).
      */
     public void gui(){
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
