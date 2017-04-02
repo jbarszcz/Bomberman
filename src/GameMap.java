@@ -18,11 +18,23 @@ import java.util.Vector;
 public class GameMap extends JPanel
 
 {
+    /**
+     * Wektor wszystkich Obiektow na planszy, z ktorymi bomber bedzie oddzialywal
+     */
     public Vector<GameObject> vGameObjects;
+    /**
+     * Obiekt bombera
+     */
     Bomber bomber;
+    /**
+     *zmienna przechowujaca aktualna ilosc puntkow
+     */
     int numberOfPoints=500;
 
-
+    /**
+     *konstruktor - za parametr bierze numer poziomu porzebny do wczytania.
+     * Wywolywana jest funkcja loadLevel z klasy Parser
+     */
     public GameMap(String levelNumber) {
 
         vGameObjects = new Vector<>();
@@ -34,7 +46,9 @@ public class GameMap extends JPanel
        // repaint();
     }
 
-
+    /**
+     *metoda rysujaca wszystkie obiekty na planszy oraz HUD
+     */
     public void paint(Graphics g){
 
 
@@ -47,6 +61,9 @@ public class GameMap extends JPanel
 
     }
 
+    /**
+     *metoda rysujaca HUD - informacje o liczbie zyc oraz punktow
+     */
     public void drawHUD(Graphics g){
 
 

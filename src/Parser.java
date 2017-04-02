@@ -11,31 +11,74 @@ import static java.lang.Integer.max;
 import static java.lang.Math.min;
 
 /**
- * klasa majšca na celu pobieranie danych z pliku konfiguracyjnego
+ * klasa pobierajaca dane z pliku konfiguracyjnego oraz definicje poziomow
  */
 public final class Parser {
 
-
+    /**
+     * liczba poziomow gry
+     */
     public static int LevelNumber;
+    /**
+     * poczatkowa szerokosc planszy
+     */
     public static int GameWindowWidth;
+    /**
+     * poczatkowa wysokosc planszy
+     */
     public static int GameWindowHeight;
+    /**
+     * liczba zyc gracza
+     * */
     public static int NumberOfLifes;
+    /**
+     * predkosc gracza
+     */
     public static int BomberSpeed;
+    /**
+     * predkosc potworow
+     */
     public static int MonsterSpeed;
+    /**
+     * sila razenia bomby
+     */
     public static int BombPower;
 
-
+    /**
+     * obrazek sciany niezniszczalnej
+     */
     public static BufferedImage wallImage;
+    /**
+     * obrazek sciany zniszczalnej
+     */
     public static BufferedImage brickImage;
+    /**
+     * obrazek bomby
+     */
     public static BufferedImage bomberImage;
+    /**
+     * obrazek potwora
+     */
     public static BufferedImage monsterImage;
+    /**
+     * obrazek serduszka
+     */
     public static BufferedImage lifeImage;
+    /**
+     * obrazek bomby
+     */
     public static BufferedImage bombImage;
+    /**
+     * obrazek bonusu1
+     */
     public static BufferedImage bonus1Image;
-
+    /**
+     * obrazek bonusu2
+     */
+    public static BufferedImage bonus2Image;
 
     /**
-     * konstruktor klasy Parser. Obiekt ten tworzony jest tylko raz, więc od razu odczytywany jest plik konfiguracyjny
+     * konstruktor klasy Parser. Wywoluje metode odczytu pliku konfiguracyjnego
      **/
     public Parser(){
         readCfg();
@@ -46,6 +89,9 @@ public final class Parser {
      */
     public void readCfg() {
         try {
+            /**
+             * otwieranie pliku
+             */
             File sciezka = new File("src/config.txt");
             FileReader plik = new FileReader(sciezka);
             BufferedReader odczyt = new BufferedReader(plik);
@@ -78,6 +124,7 @@ public final class Parser {
             monsterImage= ImageIO.read(getClass().getResourceAsStream("monsterIMG.png"));
             lifeImage= ImageIO.read(getClass().getResourceAsStream("lifeIMG.png"));
             bonus1Image= ImageIO.read(getClass().getResourceAsStream("bonus1IMG.png"));
+            bonus2Image=ImageIO.read(getClass().getResourceAsStream("doorIMG.png"));
         }
 
         catch (IOException e)
@@ -93,8 +140,13 @@ public final class Parser {
     public static void loadLevel(String path, GameMap gameMap) {
 
         int state = 0;
-
+        /**
+         * liczba wierszy planszy
+         */
         int numberOfRows = 0;
+        /**
+         * liczba kolumn planszy
+         */
         int numberOfColumns = 0;
         int x;
         int y;
@@ -177,6 +229,14 @@ public final class Parser {
                             (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,bonus1Image,2));
+
+                        break;
+                   //drzwi
+                    case (8): gameMap.vGameObjects.add(new Bonus(
+                            (GameWindowWidth/numberOfColumns)*(x-1),
+                            (GameWindowHeight/numberOfRows)*(y-1),
+                            GameWindowHeight/numberOfRows,
+                            GameWindowWidth/numberOfColumns,bonus2Image,3));
 
                         break;
 

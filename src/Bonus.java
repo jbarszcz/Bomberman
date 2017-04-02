@@ -4,8 +4,13 @@ import java.awt.image.BufferedImage;
  * Klasa bonusów
  */
 public class Bonus extends GameObject {
+    /**
+     * ID bonusu - w zaleznosci od wartosci bonus bedzie wywolywal rozne efekty po zdobyciu
+     */
     int bonusType;
-
+    /**
+     * kosntruktor przyjmujacy parametry niezbedne do narysowania
+     */
     public Bonus(int x, int y, int xsize, int ysize, BufferedImage image, int type)
     {
         super(x,y,xsize,ysize,image);
@@ -13,5 +18,8 @@ public class Bonus extends GameObject {
 
     }
 
+    /**
+     * funkcja opisujaca dzialanie bonusu
+     */
     public void actionWhenMet(){};
 }

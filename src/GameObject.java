@@ -5,14 +5,34 @@ import java.awt.image.BufferedImage;
  * klasa abstrakcyjna większości obiektów w grze
  */
 public abstract class GameObject {
-    private int x; // współrzędna x - rozmiar okna podzielony przez numer wiersza
-    private int y; //współrzędna y - rozmiar okna podzielony przez numer kolumny
-    private int xsize; //szerokość obiektu
-    private int ysize; //długość obiektu
-    private BufferedImage image; //obrazek obiektu
-    public boolean isBreakable; // czy obiekt jest zniszczalny przez bombę
+    /**
+     * współrzędna x - rozmiar okna przez numer wiersza
+     */
+    private int x;
+    /**
+     * współrzędna y - wysokosc okna przez numer kolumny
+     */
+    private int y;
+    /**
+     * szerokosc obiektu potrzebna do narysowania
+     */
+    private int xsize;
+    /**
+     * dlugosc obiektu potrzebna do narysowania
+     */
+    private int ysize;
+    /**
+     * obrazek obiektu
+     */
+    private BufferedImage image;
+    /**
+     * czy obiekt jest zniszczalny przez bombe
+     */
+    public boolean isBreakable;
 
-
+    /**
+     * konstruktor przyjmujacy wszystkie niezbedne dane do narysowania obiektu
+     */
     public GameObject(int x,int y,int xsize,int ysize,BufferedImage image){
 
         this.x = x;
@@ -22,6 +42,10 @@ public abstract class GameObject {
         this.image = image;
     }
 
+    /**
+     *
+     * funkcja rysująca obiekt, jako parametr przyjmuje kontekst graficzny
+     */
     public void draw(Graphics g) {
         g.drawImage(image, x, y, xsize, ysize,null);
 
@@ -31,16 +55,30 @@ public abstract class GameObject {
         System.out.println();*/
     }
 
-// zestaw getów i setów
+    /**
+     * ustawia @param x
+     */
     public void setX(int x){
         this.x = x;
     }
+
+    /**
+     * ustawia @param y
+     */
     public void setY(int y){
         this.y = y;
     }
+
+    /**
+     * zwraca obecny x
+     */
     public int getX(){
         return x;
     }
+
+    /**
+     * zwraca obecny y
+     */
     public int getY(){
         return y;
     }

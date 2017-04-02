@@ -3,13 +3,25 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * klasa zawierająca ramkę programu (JFrame)
+ * klasa opisujaca glowne okno gry
  */
 public class GameWindow extends JFrame {
+    /**
+     * Plansza gry rysowana w ramce
+     */
     GameMap gmap;
-    GameMenu gmenu = new GameMenu();
+    /**
+     * szerokosc okna odczytana z parsowania plikow
+     */
     public int width = Parser.GameWindowWidth;
+    /**
+     * wysokosc okna odczytana z klasy parsowania plikos
+     */
     public int height = Parser.GameWindowHeight;
+    /**
+     * jedostka dlugosci - jest to najmniejsza odleglosc miedzy jednym obiektem a drugim
+     * czyli min(Szerokosc/liczba kolumn, Wysokosc/liczba wierszy)
+     */
     public static int lengthUnit;
 
     public GameWindow(){
@@ -19,8 +31,7 @@ public class GameWindow extends JFrame {
         setBackground(new Color(34,139,34));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
-        gmap = new GameMap("2");
+        gmap = new GameMap("3");
         this.add(gmap);
         gmap.setPreferredSize(new Dimension(width +lengthUnit,height + lengthUnit)); //poszerzamy okno o 1 jednostke zeby zmieścić HUD
         pack();

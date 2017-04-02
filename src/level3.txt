@@ -20,4 +20,6 @@
 #Pozycja potworów
 #Dodatkowe życia
 #Bonus 1
+#drzwi
+4 4
 .
