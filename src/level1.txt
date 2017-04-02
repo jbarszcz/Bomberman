@@ -1,7 +1,6 @@
 #Liczba wierszy i kolumn
 11 11
 #Rozklad przeszkod niezniszczalnych
-0 0
 11 11
 10 10
 1 1
