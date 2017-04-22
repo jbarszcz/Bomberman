@@ -40,6 +40,8 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     int dX = 0;
     int dY = 0;
 
+    boolean up,down,left,right = false;
+
     /**
      * konstruktor - za parametr bierze numer poziomu porzebny do wczytania.
      * Wywolywana jest funkcja loadLevel z klasy Parser
@@ -56,7 +58,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
 
         Parser.loadLevel("src/level" + levelNumber + ".txt", this);
-        //tm.start();
+        tm.start();
         addKeyListener(this);
 
 
@@ -141,36 +143,54 @@ public void actionPerformed(ActionEvent e){
     }
 
     public void keyPressed(KeyEvent e)
-    {   tm.start();
+    {   //tm.start();
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_DOWN){
             dX=0;
             dY =1;
+            down = true;
         }
 
         if (key == KeyEvent.VK_UP){
             dX=0;
             dY=-1;
+            up = true;
         }
 
         if (key == KeyEvent.VK_LEFT){
             dX=-1;
             dY=0;
+            left = true;
         }
 
         if (key == KeyEvent.VK_RIGHT){
             dX=1;
             dY=0;
+            right = true;
         }
 
     }
     public void keyReleased(KeyEvent e)
     {
-        tm.stop();
-        dX=0;
-        dY=0;
+        int key = e.getKeyCode();
+
+
+        //to jest po to żeby nie lagowało przy szybkiej zmianie przycisków (wciskamy jeden zanim puścimy drugi);
+        if (key==KeyEvent.VK_DOWN) down = false;
+        if (key==KeyEvent.VK_UP) up = false;
+        if (key==KeyEvent.VK_LEFT) left = false;
+        if (key==KeyEvent.VK_RIGHT) right = false;
+
+        //postać zatrzyma się tylko jeśli wszystkie przyciski są puszczone
+        // a nie np. kiedy wcisnęliśmy jeden i dopiero puściliśmy drugi
+        if (down == false & up == false & right == false & left ==false) {
+            //tm.stop();
+            dX=0;
+            dY=0;
+        }
     }
+
     public void keyTyped(KeyEvent e)
     {
 
