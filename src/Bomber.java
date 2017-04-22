@@ -1,9 +1,12 @@
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 /**
  * Klasa opisująca bombera
  */
-public class Bomber extends GameObject {
+public class Bomber extends GameObject{
     /**
      * predkosc bombera
      */
@@ -12,6 +15,8 @@ public class Bomber extends GameObject {
      * pozostala liczba zyc
      */
     public int lifesLeft;
+    int dx;
+    int dy;
 
     /**
      *konstruktor klasy bomber. W odroznieniu do GameObject ustwia jeszcze liczbe zyc oraz predkosc
@@ -24,5 +29,19 @@ public class Bomber extends GameObject {
         speed = Parser.BomberSpeed;
 
     }
+
+    public void placeBomb(){};
+
+    public void move(){
+
+        x=x+GameWindow.lengthUnit*dx;
+        y=y+GameWindow.lengthUnit*dy;
+
+        System.out.println(x);
+        System.out.println(y);
+
+    }
+
+
 
 }

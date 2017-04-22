@@ -8,11 +8,11 @@ public abstract class GameObject {
     /**
      * współrzędna x - rozmiar okna przez numer wiersza
      */
-    private int x;
+    public int x;
     /**
      * współrzędna y - wysokosc okna przez numer kolumny
      */
-    private int y;
+    public int y;
     /**
      * szerokosc obiektu potrzebna do narysowania
      */

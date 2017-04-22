@@ -216,7 +216,7 @@ public final class Parser {
 
                         break;
                     //dodatkowe życia
-                    case (6): gameMap.vGameObjects.add(new Bonus(
+                    case (6): gameMap.vSpecialGameObjects.add(new Bonus(
                             (GameWindowWidth/numberOfColumns)*(x-1),
                             (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
@@ -224,7 +224,7 @@ public final class Parser {
 
                         break;
                     //bonusy
-                    case (7): gameMap.vGameObjects.add(new Bonus(
+                    case (7): gameMap.vSpecialGameObjects.add(new Bonus(
                             (GameWindowWidth/numberOfColumns)*(x-1),
                             (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
@@ -232,7 +232,7 @@ public final class Parser {
 
                         break;
                    //drzwi
-                    case (8): gameMap.vGameObjects.add(new Bonus(
+                    case (8): gameMap.vSpecialGameObjects.add(new Bonus(
                             (GameWindowWidth/numberOfColumns)*(x-1),
                             (GameWindowHeight/numberOfRows)*(y-1),
                             GameWindowHeight/numberOfRows,
