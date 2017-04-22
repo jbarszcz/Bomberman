@@ -62,6 +62,7 @@ public abstract class GameObject {
         this.x = x;
     }
 
+
     /**
      * ustawia @param y
      */
@@ -82,6 +83,7 @@ public abstract class GameObject {
     public int getY(){
         return y;
     }
+
 
 }
 

@@ -21,7 +21,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
 {
 
-    Timer tm = new Timer(5,this);
+    Timer tm = new Timer(15,this);
     /**
      * Wektor wszystkich Obiektow na planszy, z ktorymi bomber bedzie oddzialywal
      */
@@ -30,13 +30,13 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
      * Obiekt bombera
      */
 
-    public Vector<GameObject> vSpecialGameObjects;
+    public Vector<Bonus> vSpecialGameObjects;
 
     Bomber bomber;
     /**
      * zmienna przechowujaca aktualna ilosc puntkow
      */
-    int numberOfPoints = 500;
+    public static int numberOfPoints = 0;
     int dX = 0;
     int dY = 0;
 
@@ -56,7 +56,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
 
         Parser.loadLevel("src/level" + levelNumber + ".txt", this);
-        tm.start();
+        //tm.start();
         addKeyListener(this);
 
 
@@ -106,11 +106,12 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
         int a;
         int b;
 
-        for (GameObject go : vSpecialGameObjects) {
+        for (Bonus go : vSpecialGameObjects) {
             a = Math.abs((bomber.getX()+dx) - go.getX());
             b = Math.abs((bomber.getY()+dy) - go.getY());
 
             if (a < GameWindow.lengthUnit & b < GameWindow.lengthUnit) {
+                go.catched();
                 vSpecialGameObjects.remove(go);
                 return true;
             }
@@ -120,7 +121,8 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
           a = Math.abs((bomber.getX()+dx) - go.getX());
           b = Math.abs((bomber.getY()+dy) - go.getY());
-         if (a < GameWindow.lengthUnit-5 & b < GameWindow.lengthUnit-5) {
+
+          if (a <= GameWindow.lengthUnit-5 & b <= GameWindow.lengthUnit-5) {
              return false;
          }
 
@@ -139,7 +141,7 @@ public void actionPerformed(ActionEvent e){
     }
 
     public void keyPressed(KeyEvent e)
-    {
+    {   tm.start();
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_DOWN){
@@ -165,6 +167,7 @@ public void actionPerformed(ActionEvent e){
     }
     public void keyReleased(KeyEvent e)
     {
+        tm.stop();
         dX=0;
         dY=0;
     }

@@ -7,7 +7,7 @@
 #Ilosc zyc:
 4
 #Predkosc gracza
-1
+2
 #Predkosc potworow
 100
 #Pole razenia bomby

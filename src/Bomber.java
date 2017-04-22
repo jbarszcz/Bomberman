@@ -14,7 +14,7 @@ public class Bomber extends GameObject{
     /**
      * pozostala liczba zyc
      */
-    public int lifesLeft;
+    public static int lifesLeft;
     int dx;
     int dy;
 
@@ -31,6 +31,9 @@ public class Bomber extends GameObject{
     }
 
     public void placeBomb(){};
+
+    public void addLife(){
+    }
 
     public void move(){
 

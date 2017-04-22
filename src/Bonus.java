@@ -21,5 +21,19 @@ public class Bonus extends GameObject {
     /**
      * funkcja opisujaca dzialanie bonusu
      */
-    public void actionWhenMet(){};
+
+    public void catched(){
+
+
+        switch(bonusType){
+            case(1): Bomber.lifesLeft++;
+                break;
+
+            case(2): GameMap.numberOfPoints+=100;
+                break;
+
+                default: break;
+        }
+
+    };
 }
