@@ -19,7 +19,7 @@ public class Bonus extends GameObject {
     }
 
     /**
-     * funkcja opisujaca dzialanie bonusu
+     * funkcja opisujaca dzialanie bonusu po jego zdobyciu
      */
 
     public void catched(){

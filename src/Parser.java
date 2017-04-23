@@ -125,6 +125,7 @@ public final class Parser {
             lifeImage= ImageIO.read(getClass().getResourceAsStream("lifeIMG.png"));
             bonus1Image= ImageIO.read(getClass().getResourceAsStream("bonus1IMG.png"));
             bonus2Image=ImageIO.read(getClass().getResourceAsStream("doorIMG.png"));
+            bombImage=ImageIO.read(getClass().getResourceAsStream("bomb.png"));
         }
 
         catch (IOException e)

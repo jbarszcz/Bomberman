@@ -20,33 +20,50 @@ import java.util.Vector;
 public class GameMap extends JPanel implements ActionListener, KeyListener
 
 {
-
+    /**
+     * licznik pomocny przy animacji i obsludze zdarzeń
+     */
     Timer tm = new Timer(15,this);
     /**
      * Wektor wszystkich Obiektow na planszy, z ktorymi bomber bedzie oddzialywal
      */
     public Vector<GameObject> vGameObjects;
     /**
-     * Obiekt bombera
+     * wektor obiektów o specjalnym efekcie - bonusów
      */
-
     public Vector<Bonus> vSpecialGameObjects;
 
+    /**
+     * wektor bomb
+     */
+    public static Vector<Bomb> vBombs;
+    /**
+     * Obiekt bombera
+     */
     Bomber bomber;
     /**
      * zmienna przechowujaca aktualna ilosc puntkow
      */
     public static int numberOfPoints = 0;
+
+    /**
+     * zmienna zmiany pozycji poziomej przy ruchu
+     */
     int dX = 0;
+    /**
+     * zmienna zmiany pozycji pionowej przy ruchu
+     */
     int dY = 0;
 
+    /***
+     *zmienne pomocnicze służące do płynnego poruszania się bombera
+     **/
     boolean up,down,left,right = false;
 
     /**
      * konstruktor - za parametr bierze numer poziomu porzebny do wczytania.
      * Wywolywana jest funkcja loadLevel z klasy Parser
      */
-
     public GameMap(String levelNumber) {
 
 
@@ -54,15 +71,16 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
         vGameObjects = new Vector<>();
         vSpecialGameObjects = new Vector<>();
+        vBombs = new Vector<Bomb>();
 
 
-
+        //wczytywanie danych poziomu
         Parser.loadLevel("src/level" + levelNumber + ".txt", this);
+        //start timera
         tm.start();
         addKeyListener(this);
 
 
-        // repaint();
     }
 
     /**
@@ -71,14 +89,26 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     public void paint(Graphics g) {
 
         super.paintComponent(g);
-        for (GameObject go : vGameObjects) {
-            go.draw(g);
-        }
 
+        //rysuje wszystkie bonus - przed blokami i potworami, tak żeby mogły być schowane
         for (GameObject go : vSpecialGameObjects) {
             go.draw(g);
         }
 
+        //najpierw rysuje wszystkie bloki
+        for (GameObject go : vGameObjects) {
+            go.draw(g);
+        }
+
+
+
+
+        //rysuje wszystkie bomby
+        for (Bomb b : vBombs){
+            b.draw(g);
+        }
+
+        //rysuje bombera
         bomber.draw(g);
         drawHUD(g);
 
@@ -107,7 +137,9 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
         int a;
         int b;
-
+        /**
+         * pętla zbierająca bonusy
+         */
         for (Bonus go : vSpecialGameObjects) {
             a = Math.abs((bomber.getX()+dx) - go.getX());
             b = Math.abs((bomber.getY()+dy) - go.getY());
@@ -118,13 +150,15 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
                 return true;
             }
         }
-
+        /**
+         *  pętla realizująca fizykę śćian
+         */
         for (GameObject go : vGameObjects) {
 
           a = (bomber.getX()+dx) - go.getX();
           b = (bomber.getY()+dy) - go.getY();
 
-
+            //ustawiamy margines 5 pikseli - bardzo ciężko jest wcelować się bomberem co do 1 piksela
           if (Math.abs(a) <= GameWindow.lengthUnit-5 & Math.abs(b) <= GameWindow.lengthUnit-5) {
              return false;
          }
@@ -143,8 +177,13 @@ public void actionPerformed(ActionEvent e){
 
             repaint();
         }
+
     }
 
+    /**
+     * metoda obsługująca zdarzenie wciśnięcia przycisku
+     * @param e
+     */
     public void keyPressed(KeyEvent e)
     {   //tm.start();
         int key = e.getKeyCode();
@@ -172,8 +211,17 @@ public void actionPerformed(ActionEvent e){
             dY=0;
             right = true;
         }
+        //spacja -> rysowana jest nowa bomba
+        if (key == KeyEvent.VK_SPACE){
+            vBombs.add(new Bomb(bomber.getX(),bomber.getY(),GameWindow.lengthUnit,GameWindow.lengthUnit,Parser.bombImage));
+        }
 
     }
+
+    /***
+     * metoda obsługująca zdarzenie zwolnienia przycisku
+     * @param e
+     */
     public void keyReleased(KeyEvent e)
     {
         int key = e.getKeyCode();

@@ -30,10 +30,7 @@ public class Bomber extends GameObject{
 
     }
 
-    public void placeBomb(){};
 
-    public void addLife(){
-    }
 
     public void move(int dX, int dY){
 
