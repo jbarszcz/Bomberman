@@ -121,10 +121,11 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
         for (GameObject go : vGameObjects) {
 
-          a = Math.abs((bomber.getX()+dx) - go.getX());
-          b = Math.abs((bomber.getY()+dy) - go.getY());
+          a = (bomber.getX()+dx) - go.getX();
+          b = (bomber.getY()+dy) - go.getY();
 
-          if (a <= GameWindow.lengthUnit-5 & b <= GameWindow.lengthUnit-5) {
+
+          if (Math.abs(a) <= GameWindow.lengthUnit-5 & Math.abs(b) <= GameWindow.lengthUnit-5) {
              return false;
          }
 
@@ -138,6 +139,8 @@ public void actionPerformed(ActionEvent e){
         if(canBomberMove(dX,dY)) {
             bomber.setX(bomber.getX() + bomber.speed * dX);
             bomber.setY(bomber.getY() + bomber.speed * dY);
+            //bomber.move(dX,dY);
+
             repaint();
         }
     }

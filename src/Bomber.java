@@ -35,10 +35,10 @@ public class Bomber extends GameObject{
     public void addLife(){
     }
 
-    public void move(){
+    public void move(int dX, int dY){
 
-        x=x+GameWindow.lengthUnit*dx;
-        y=y+GameWindow.lengthUnit*dy;
+        x+=dx*speed;
+        y+=dy*speed;
 
         System.out.println(x);
         System.out.println(y);
