@@ -9,7 +9,7 @@ public abstract class GameObject {
     public int positionX ;
 
     public int positionY;
-
+    boolean isBroken = false;
     public float ratioX;
     public float ratioY;
 

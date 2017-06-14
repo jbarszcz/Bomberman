@@ -7,6 +7,8 @@ public class Bomb extends GameObject {
     /**
      * kosntruktor przyjmujacy parametry niezbedne do narysowania
      */
+
+    int timer=0;
     public Bomb(int x, int y, int xsize, int ysize, BufferedImage image)
     {
         super(x,y,xsize,ysize,image);
@@ -15,7 +17,8 @@ public class Bomb extends GameObject {
 
 
     public Bomb(float ratioX, float ratioY, BufferedImage bombImage) {
-        super(ratioX,ratioY,bombImage);
+
+        super(ratioX ,ratioY, bombImage);
     }
 }
 

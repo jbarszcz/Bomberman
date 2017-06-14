@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -62,7 +63,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     /***
      *zmienne pomocnicze służące do płynnego poruszania się bombera
      **/
-    boolean up,down,left,right,keypressed, pleaseDontMoveBomber = false;
+    boolean up,down,left,right,keypressed= false;
 
     /**
      * konstruktor - za parametr bierze numer poziomu porzebny do wczytania.
@@ -184,27 +185,53 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     }
 
 
-public void actionPerformed(ActionEvent e){
+public void actionPerformed(ActionEvent e) {
 
-        if(canBomberMove(dX,dY) && keypressed) {
-
-
-            //bomber.setX(bomber.getX() + bomber.speed * dX);
-            //bomber.setY(bomber.getY() + bomber.speed * dY);
-
-            bomber.ratioX=((float)bomber.getX()/(float)GameMap.width) + (float)bomber.speed*(float)dX*(float)0.001;
-            bomber.ratioY=((float)bomber.getY()/(float)GameMap.height) + (float)bomber.speed*(float)dY*(float)0.001;
-
-            //System.out.println(bomber.ratioX+" "+bomber.ratioY + " " + bomber.getX() + " " + bomber.getY());
+    if (canBomberMove(dX, dY) && keypressed) {
 
 
-            //bomber.move(dX,dY);
+        //bomber.setX(bomber.getX() + bomber.speed * dX);
+        //bomber.setY(bomber.getY() + bomber.speed * dY);
 
-            repaint();
-        }
+        bomber.ratioX = ((float) bomber.getX() / (float) GameMap.width) + (float) bomber.speed * (float) dX * (float) 0.001;
+        bomber.ratioY = ((float) bomber.getY() / (float) GameMap.height) + (float) bomber.speed * (float) dY * (float) 0.001;
+
+        //System.out.println(bomber.ratioX+" "+bomber.ratioY + " " + bomber.getX() + " " + bomber.getY());
+
+
+
+
+        //bomber.move(dX,dY);
+
+        repaint();
 
     }
+// to jest do dokończenia
+    for (Bomb bo : vBombs) {
 
+        if (bo.timer > 2500) {
+
+
+            Iterator<GameObject> iter = vGameObjects.iterator();
+
+            while (iter.hasNext()){
+                //tutaj odbywa się fizyka wybuchów bomby
+                GameObject go = iter.next();
+
+                if (Math.abs(bo.getY() +GameWindow.lengthUnitY -go.getY())<=GameWindow.lengthUnitY &&  Math.abs(bo.getX()-go.getX())<=GameWindow.lengthUnitX && go.isBreakable)
+
+                    iter.remove(); //zniszczony blok jest usuwany
+            }
+
+            vBombs.remove(bo);
+            break;
+        }
+
+        else {
+            bo.timer += 25;
+        }
+    }
+}
     /**
      * metoda obsługująca zdarzenie wciśnięcia przycisku
      * @param e
@@ -242,8 +269,17 @@ public void actionPerformed(ActionEvent e){
             right = true;
         }
         //spacja -> rysowana jest nowa bomba
+
         if (key == KeyEvent.VK_SPACE){
-            vBombs.add(new Bomb(bomber.ratioX,bomber.ratioY,Parser.bombImage));
+
+
+            //tutaj zabawa współrzędnymi żeby bomby ustawiały się na równych pozycjach
+           float ratioXfixed =  ((float)Math.round((double)(bomber.ratioX*Parser.numberOfColumns))) +1;
+           float ratioYfixed =  ((float)Math.round((double)(bomber.ratioY*Parser.numberOfRows))) +1;
+
+           System.out.println("BomberX: " + bomber.ratioX*11 + " BomberY: "+ bomber.ratioY*11+ "ratioX  " +ratioXfixed  + " ratioY:  "+ratioYfixed);
+
+            vBombs.add(new Bomb((int)ratioXfixed,(int)ratioYfixed,GameMap.width/Parser.numberOfColumns,GameMap.height/Parser.numberOfRows,Parser.bombImage));
         }
 
     }
@@ -252,6 +288,9 @@ public void actionPerformed(ActionEvent e){
      * metoda obsługująca zdarzenie zwolnienia przycisku
      * @param e
      */
+
+
+
     public void keyReleased(KeyEvent e)
     {
         int key = e.getKeyCode();

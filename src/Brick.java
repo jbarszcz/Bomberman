@@ -7,6 +7,8 @@ public class Brick extends GameObject {
     /**
      * kosntruktor przyjmujacy parametry niezbedne do narysowania
      */
+
+
     public Brick(int x, int y, int xsize, int ysize, BufferedImage image)
     {
         super(x,y,xsize,ysize,image);

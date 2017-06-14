@@ -55,7 +55,7 @@ public class Bomber extends GameObject{
       //System.out.print(ratioX);
         //System.out.print(" ");
         //System.out.print(ratioY);
-        System.out.println();
+       // System.out.println();
     }
 
 
