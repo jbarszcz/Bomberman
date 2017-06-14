@@ -44,6 +44,10 @@ public final class Parser {
      */
     public static int BombPower;
 
+    public static int numberOfColumns;
+
+    public static int numberOfRows;
+
     /**
      * obrazek sciany niezniszczalnej
      */
@@ -144,11 +148,11 @@ public final class Parser {
         /**
          * liczba wierszy planszy
          */
-        int numberOfRows = 0;
+        numberOfRows = 0;
         /**
          * liczba kolumn planszy
          */
-        int numberOfColumns = 0;
+        numberOfColumns = 0;
         int x;
         int y;
         try {
@@ -181,13 +185,13 @@ public final class Parser {
                     case (1):
                         numberOfRows=x;
                         numberOfColumns=y;
-                        GameWindow.lengthUnit = min(GameWindowHeight/x,GameWindowHeight/y);
+                       // GameWindow.lengthUnit = min(GameWindowHeight/x,GameWindowHeight/y);
                         break;
                     //wczytywanie scian niezniszczalnych
                     case (2):
                        gameMap.vGameObjects.add(new Wall(
-                               (GameWindowWidth/numberOfColumns)*(x-1),  //-1 ponieważ użytkownik zwykle indeksuje od 1
-                               (GameWindowHeight/numberOfRows)*(y-1),
+                               x,  //-1 ponieważ użytkownik zwykle indeksuje od 1
+                               y,
                                GameWindowHeight/numberOfRows,
                                GameWindowWidth/numberOfColumns,wallImage));
                         break;
@@ -195,47 +199,41 @@ public final class Parser {
                     case (3):
 
                         gameMap.vGameObjects.add(new Brick(
-                                (GameWindowWidth/numberOfColumns)*(x-1),
-                                (GameWindowHeight/numberOfRows)*(y-1),
+                                x,y,
                                 GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,brickImage));
                     break;
                     //wczytanie pozycji bombera
                     case (4):
-                        gameMap.bomber=new Bomber((GameWindowWidth/numberOfColumns)*(x-1),
-                                (GameWindowHeight/numberOfRows)*(y-1),
+                        gameMap.bomber=new Bomber(x,y,
                                 GameWindowHeight/numberOfRows,
                                 GameWindowWidth/numberOfColumns,bomberImage);
 
                     break;
 
                     case (5): gameMap.vGameObjects.add(new Monster(
-                            (GameWindowWidth/numberOfColumns)*(x-1),
-                            (GameWindowHeight/numberOfRows)*(y-1),
+                            x,y,
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,monsterImage));
 
                         break;
                     //dodatkowe życia
                     case (6): gameMap.vSpecialGameObjects.add(new Bonus(
-                            (GameWindowWidth/numberOfColumns)*(x-1),
-                            (GameWindowHeight/numberOfRows)*(y-1),
+                            x,y,
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,lifeImage,1));
 
                         break;
                     //bonusy
                     case (7): gameMap.vSpecialGameObjects.add(new Bonus(
-                            (GameWindowWidth/numberOfColumns)*(x-1),
-                            (GameWindowHeight/numberOfRows)*(y-1),
+                            x,y,
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,bonus1Image,2));
 
                         break;
                    //drzwi
                     case (8): gameMap.vSpecialGameObjects.add(new Bonus(
-                            (GameWindowWidth/numberOfColumns)*(x-1),
-                            (GameWindowHeight/numberOfRows)*(y-1),
+                         x,y,
                             GameWindowHeight/numberOfRows,
                             GameWindowWidth/numberOfColumns,bonus2Image,3));
 

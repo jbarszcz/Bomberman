@@ -23,7 +23,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     /**
      * licznik pomocny przy animacji i obsludze zdarzeń
      */
-    Timer tm = new Timer(15,this);
+    Timer tm = new Timer(25,this);
     /**
      * Wektor wszystkich Obiektow na planszy, z ktorymi bomber bedzie oddzialywal
      */
@@ -55,19 +55,29 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
      */
     int dY = 0;
 
+    int previousdX;
+
+    int previousdY;
+
     /***
      *zmienne pomocnicze służące do płynnego poruszania się bombera
      **/
-    boolean up,down,left,right = false;
+    boolean up,down,left,right,keypressed, pleaseDontMoveBomber = false;
 
     /**
      * konstruktor - za parametr bierze numer poziomu porzebny do wczytania.
      * Wywolywana jest funkcja loadLevel z klasy Parser
      */
+
+    public static int height=Parser.GameWindowHeight;
+    public static int width=Parser.GameWindowWidth;
+
     public GameMap(String levelNumber) {
 
 
 
+
+       // System.out.println(height +"  oraz  " + width);
 
         vGameObjects = new Vector<>();
         vSpecialGameObjects = new Vector<>();
@@ -98,11 +108,8 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
         //najpierw rysuje wszystkie bloki
         for (GameObject go : vGameObjects) {
             go.draw(g);
+
         }
-
-
-
-
         //rysuje wszystkie bomby
         for (Bomb b : vBombs){
             b.draw(g);
@@ -120,16 +127,17 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
     public void drawHUD(Graphics g) {
 
 
-        g.drawImage(Parser.lifeImage, 0, Parser.GameWindowHeight, GameWindow.lengthUnit, GameWindow.lengthUnit, null);
+       // g.drawImage(Parser.lifeImage, 0, Parser.GameWindowHeight, GameWindow.lengthUnit, GameWindow.lengthUnit, null);
 
-        g.setFont(new Font("Calibri", Font.PLAIN, GameWindow.lengthUnit));
+       // g.setFont(new Font("Calibri", Font.PLAIN, GameWindow.lengthUnit));
         g.setColor(Color.white);
 
         String lifes = Integer.toString(bomber.lifesLeft);
 
-        g.drawString("=" + lifes, GameWindow.lengthUnit, Parser.GameWindowHeight + GameWindow.lengthUnit);
+        //g.drawString("=" + lifes, GameWindow.lengthUnit, Parser.GameWindowHeight + GameWindow.lengthUnit);
 
-        g.drawString("Score=" + Integer.toString(numberOfPoints), 3 * GameWindow.lengthUnit, Parser.GameWindowHeight + GameWindow.lengthUnit);
+        //g.drawString("Score=" + Integer.toString(numberOfPoints), 3 * GameWindow.lengthUnit, Parser.GameWindowHeight + GameWindow.lengthUnit);
+
 
     }
 
@@ -144,7 +152,7 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
             a = Math.abs((bomber.getX()+dx) - go.getX());
             b = Math.abs((bomber.getY()+dy) - go.getY());
 
-            if (a < GameWindow.lengthUnit & b < GameWindow.lengthUnit) {
+            if (a < GameWindow.lengthUnitX & b < GameWindow.lengthUnitY) {
                 go.catched();
                 vSpecialGameObjects.remove(go);
                 return true;
@@ -155,12 +163,20 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
          */
         for (GameObject go : vGameObjects) {
 
-          a = (bomber.getX()+dx) - go.getX();
-          b = (bomber.getY()+dy) - go.getY();
+          a = (int)((bomber.ratioX + (float)bomber.speed*(float)dX*(float)0.001) * (float)GameMap.width) - go.getX();
+          b = (int)((bomber.ratioY + (float)bomber.speed*(float)dY*(float)0.001) * (float)GameMap.height) - go.getY();
+
+          //System.out.println(a + " " + b);
 
             //ustawiamy margines 5 pikseli - bardzo ciężko jest wcelować się bomberem co do 1 piksela
-          if (Math.abs(a) <= GameWindow.lengthUnit-5 & Math.abs(b) <= GameWindow.lengthUnit-5) {
-             return false;
+
+
+          if (Math.abs(a) <= 0.9*GameWindow.lengthUnitX  & Math.abs(b) <= 0.9*GameWindow.lengthUnitY ) {
+
+
+
+              return false;
+
          }
 
         }
@@ -170,9 +186,18 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
 
 public void actionPerformed(ActionEvent e){
 
-        if(canBomberMove(dX,dY)) {
-            bomber.setX(bomber.getX() + bomber.speed * dX);
-            bomber.setY(bomber.getY() + bomber.speed * dY);
+        if(canBomberMove(dX,dY) && keypressed) {
+
+
+            //bomber.setX(bomber.getX() + bomber.speed * dX);
+            //bomber.setY(bomber.getY() + bomber.speed * dY);
+
+            bomber.ratioX=((float)bomber.getX()/(float)GameMap.width) + (float)bomber.speed*(float)dX*(float)0.001;
+            bomber.ratioY=((float)bomber.getY()/(float)GameMap.height) + (float)bomber.speed*(float)dY*(float)0.001;
+
+            //System.out.println(bomber.ratioX+" "+bomber.ratioY + " " + bomber.getX() + " " + bomber.getY());
+
+
             //bomber.move(dX,dY);
 
             repaint();
@@ -186,7 +211,12 @@ public void actionPerformed(ActionEvent e){
      */
     public void keyPressed(KeyEvent e)
     {   //tm.start();
+        keypressed=true;
+
+
         int key = e.getKeyCode();
+
+
 
         if (key == KeyEvent.VK_DOWN){
             dX=0;
@@ -213,7 +243,7 @@ public void actionPerformed(ActionEvent e){
         }
         //spacja -> rysowana jest nowa bomba
         if (key == KeyEvent.VK_SPACE){
-            vBombs.add(new Bomb(bomber.getX(),bomber.getY(),GameWindow.lengthUnit,GameWindow.lengthUnit,Parser.bombImage));
+            vBombs.add(new Bomb(bomber.ratioX,bomber.ratioY,Parser.bombImage));
         }
 
     }
@@ -227,6 +257,7 @@ public void actionPerformed(ActionEvent e){
         int key = e.getKeyCode();
 
 
+
         //to jest po to żeby nie lagowało przy szybkiej zmianie przycisków (wciskamy jeden zanim puścimy drugi);
         if (key==KeyEvent.VK_DOWN) down = false;
         if (key==KeyEvent.VK_UP) up = false;
@@ -237,14 +268,20 @@ public void actionPerformed(ActionEvent e){
         // a nie np. kiedy wcisnęliśmy jeden i dopiero puściliśmy drugi
         if (down == false & up == false & right == false & left ==false) {
             //tm.stop();
+           if (dX != 0) previousdX = dX;
+           if (dY !=0) previousdY = dY;
+
             dX=0;
             dY=0;
         }
+
+       // keypressed = false;
     }
 
     public void keyTyped(KeyEvent e)
     {
 
     }
+
 
 }

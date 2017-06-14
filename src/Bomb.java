@@ -14,5 +14,8 @@ public class Bomb extends GameObject {
     }
 
 
+    public Bomb(float ratioX, float ratioY, BufferedImage bombImage) {
+        super(ratioX,ratioY,bombImage);
+    }
 }
 
