@@ -167,11 +167,13 @@ public class GameMap extends JPanel implements ActionListener, KeyListener
           a = (int)((bomber.ratioX + (float)bomber.speed*(float)dX*(float)0.001) * (float)GameMap.width) - go.getX();
           b = (int)((bomber.ratioY + (float)bomber.speed*(float)dY*(float)0.001) * (float)GameMap.height) - go.getY();
 
+          //ogólnie - za każdym razem zwiększamy WZGLĘDNE współrzędne bombera o 0.01 * jego prędkość ...
+
           //System.out.println(a + " " + b);
 
-            //ustawiamy margines 5 pikseli - bardzo ciężko jest wcelować się bomberem co do 1 piksela
 
 
+            // i sprawdzamy czy wpadnie na ścianę
           if (Math.abs(a) <= 0.9*GameWindow.lengthUnitX  & Math.abs(b) <= 0.9*GameWindow.lengthUnitY ) {
 
 
@@ -193,6 +195,8 @@ public void actionPerformed(ActionEvent e) {
         //bomber.setX(bomber.getX() + bomber.speed * dX);
         //bomber.setY(bomber.getY() + bomber.speed * dY);
 
+        //WZGLĘDNE współrzędne bombera zwiększają się o 0.001 * jego prędkość raz na 25 ms (okres timera)
+
         bomber.ratioX = ((float) bomber.getX() / (float) GameMap.width) + (float) bomber.speed * (float) dX * (float) 0.001;
         bomber.ratioY = ((float) bomber.getY() / (float) GameMap.height) + (float) bomber.speed * (float) dY * (float) 0.001;
 
@@ -209,26 +213,27 @@ public void actionPerformed(ActionEvent e) {
 // to jest do dokończenia
     for (Bomb bo : vBombs) {
 
-        if (bo.timer > 2500) {
+        if (bo.timer > 50) { //z każdym tyknięciem timera zwiększamy timer bomby , a więc bomba wybuchnie po 50*25ms = 1,25 s
 
-
+            //aby usuwać elementy z listy po której lecimy forem trzeba użyć iteratora (inaczej wywala wyjątek)
             Iterator<GameObject> iter = vGameObjects.iterator();
 
             while (iter.hasNext()){
-                //tutaj odbywa się fizyka wybuchów bomby
+                //tutaj odbywa się fizyka fali uderzeniowej
                 GameObject go = iter.next();
 
+                //jeśli lengthunitY długość jednego bloku, lengthunitX - szerokosc.
                 if (Math.abs(bo.getY() +GameWindow.lengthUnitY -go.getY())<=GameWindow.lengthUnitY &&  Math.abs(bo.getX()-go.getX())<=GameWindow.lengthUnitX && go.isBreakable)
 
                     iter.remove(); //zniszczony blok jest usuwany
             }
 
-            vBombs.remove(bo);
+            vBombs.remove(bo); //sama bomba też jest usuwana
             break;
         }
 
         else {
-            bo.timer += 25;
+            bo.timer += 1; // jeśli jeszcze nie czas na odpalenie bomby to zwiekszamy jej timer
         }
     }
 }
@@ -277,8 +282,8 @@ public void actionPerformed(ActionEvent e) {
            float ratioXfixed =  ((float)Math.round((double)(bomber.ratioX*Parser.numberOfColumns))) +1;
            float ratioYfixed =  ((float)Math.round((double)(bomber.ratioY*Parser.numberOfRows))) +1;
 
-           System.out.println("BomberX: " + bomber.ratioX*11 + " BomberY: "+ bomber.ratioY*11+ "ratioX  " +ratioXfixed  + " ratioY:  "+ratioYfixed);
-
+          //System.out.println("BomberX: " + bomber.ratioX*11 + " BomberY: "+ bomber.ratioY*11+ "ratioX  " +ratioXfixed  + " ratioY:  "+ratioYfixed);
+            //nie jest ważne jak, ważne że działą
             vBombs.add(new Bomb((int)ratioXfixed,(int)ratioYfixed,GameMap.width/Parser.numberOfColumns,GameMap.height/Parser.numberOfRows,Parser.bombImage));
         }
 

@@ -7,9 +7,9 @@ public class Main {
     public static void main(String args[]){
         Parser parse = new Parser();
         System.out.println("Start:");
-        new GameWindow();
+        //new GameWindow();
 
-       //new Mainmenu();
+       new Mainmenu();
 
     }
 }

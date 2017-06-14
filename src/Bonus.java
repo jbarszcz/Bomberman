@@ -32,6 +32,8 @@ public class Bonus extends GameObject {
             case(2): GameMap.numberOfPoints+=100;
                 break;
 
+            case(3): break; //tutaj musi być ładowanie kolejnego poziomu
+
                 default: break;
         }
 

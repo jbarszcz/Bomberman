@@ -80,11 +80,15 @@ public class GameWindow extends JFrame implements ComponentListener {
         height = this.getHeight();
 
 
-        //z jakiegoś powodu zdarzenie wywołuje się przy starcie gry i wszystko psuje, więc "elegancko" to obchodzimy
+        //z jakiegoś powodu zdarzenie wywołuje się przy starcie gry i wszystko psuje, więc "elegancko" to obchodzimy zmienną start
         if (start== false) {
+
+            //wcześniej ogarnelismy o ile zmienily sie wymiary Y i X frame'a - o tyle samo zmienily sie wymiary panelu (GameMap)
             GameMap.height = GameMap.height - changeY;
             GameMap.width = GameMap.width - changeX;
         }
+
+        //jednostki odległości - czyli szerokość i wysokośćbloków
         lengthUnitX = GameMap.width/Parser.numberOfColumns;
         lengthUnitY = GameMap.height/Parser.numberOfRows;
 

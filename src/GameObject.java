@@ -42,6 +42,8 @@ public abstract class GameObject {
      * konstruktor przyjmujacy wszystkie niezbedne dane do narysowania obiektu
      */
     public GameObject(int x1,int y1,int xsize,int ysize,BufferedImage image){
+        //do tego konstruktora zamiast współrzędnych pixel x pixel podajemy teraz numer wiersza i kolumny
+
         this.positionX = x1;
         this.positionY = y1;
         this.x = (GameMap.width/Parser.numberOfColumns)*(positionX-1);
@@ -61,6 +63,9 @@ public abstract class GameObject {
     }
 
     public GameObject(float ratioX1,float ratioY1,BufferedImage image){
+        //drugi konstruktor - zamiast wiersza i kolumny możemy podać względne współrzędne obiektu
+
+        //współrzędne WZGLĘDNE
         ratioX = ratioX1;
         ratioY = ratioY1;
 
