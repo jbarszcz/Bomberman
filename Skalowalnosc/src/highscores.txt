@@ -1,0 +1,10 @@
+Ene 1000
+due 900
+like 800
+fake 700
+torba 600
+borba 500
+usme 400
+smake 300
+deus 200
+kosmateus 100
